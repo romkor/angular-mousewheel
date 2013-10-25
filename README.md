@@ -1,10 +1,22 @@
-#Mouse wheel event wrapper for AngularJS
-=============
+#Angular wheel
+---
 
-It's just a alpha version.
+Mouse wheel event wrapper directive for AngularJS without additional dependencies.
 
-Supported directives
+Attention! It's just an alpha version.
 
-* eve-wheel
-* eve-wheel-next
-* eve-wheel-prev
+Usage
+-----
+
+         eve-wheel="{expression}"
+    eve-wheel-next="{expression}"
+    eve-wheel-prev="{expression}"
+    
+The event callback can receive 2 extra arguments, the most interesting of them is $delta.
+
+    eve-wheel="myCallback($event, $delta)"
+
+Install
+-------
+
+    bower install angular-wheel
