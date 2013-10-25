@@ -59,7 +59,6 @@
 
     }
 
-
     makeWheelDirective('eveWheel');
 
     makeWheelDirective('eveWheelNext', 1);
