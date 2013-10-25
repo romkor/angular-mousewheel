@@ -1,0 +1,22 @@
+{
+  "name": "angular-mousewheel",
+  "version": "0.0.0",
+  "description": "",
+  "author": "romko.ua@gmail.com",
+  "license": "MIT",
+  "homepage": "",
+  "main": "./src/angular-mousewheel.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "demo*",
+    "package.json"
+  ],
+  "dependencies": {
+    "angular": "~1.x"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.x"
+  }
+}
