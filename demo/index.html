@@ -2,9 +2,9 @@
 <html ng-app="Project">
 <head>
     <title></title>
-    <link type="text/css" rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <script src="../bower_components/angular/angular.min.js"></script>
-    <script src="../src/angular-wheel.js"></script>
+    <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-wheel/src/angular-wheel.js"></script>
     <script src="scripts.js"></script>
 </head>
 <body style="min-height: 1000px; padding-top: 30px;" ng-controller="MyCntrl">
@@ -44,7 +44,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <select class="form-control"
-                        eve-wheel="changeValue($delta * -1)"
+                        eve-wheel="changeValue(-$delta)"
                         ng-model="color"
                         ng-options="c.name for c in colors">
                 </select>
@@ -68,17 +68,20 @@
         <div class="col-md-6">
             <div class="form-group">
                 <ul class="nav nav-pills nav-stacked"
-                    eve-wheel="changeValue($delta * -1)">
+                    eve-wheel="changeValue(-$delta)">
                     <li ng-repeat="mycolor in colors"
-                        ng-class="getClass($index)">
+                        ng-class="getClass($index)"
+                        ng-click="selectColor($index)">
                         <a href="#{{mycolor.name}}">{{mycolor.name}}</a>
                     </li>
                 </ul>
             </div>
         </div>
+
         <div class="col-md-6">
             <pre>{{color | json}}</pre>
         </div>
+
     </div>
 
 </div>

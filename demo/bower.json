@@ -1,0 +1,21 @@
+{
+  "name": "angular-wheel",
+  "version": "0.0.0",
+  "description": "Mouse whell event wrapper for angular.js",
+  "author": "romko.ua@gmail.com",
+  "license": "MIT",
+  "homepage": "",
+  "main": "./src/angular-wheel.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "demo*",
+    "package.json"
+  ],
+  "dependencies": {
+    "angular": "~1.x",
+    "angular-wheel": "latest",
+    "bootstrap": "~3.0.0"
+  }
+}
