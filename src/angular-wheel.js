@@ -1,5 +1,5 @@
-'use strict';
 (function (factory) {
+    'use strict';
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['angular'], factory);
@@ -11,53 +11,60 @@
         factory(angular);
     }
 }(function () {
-
+    'use strict';
     // define eveWheel module
-    var eveWheelModule = angular.module('eveWheel', []);
+    var eveWheelModule = angular.module('eveWheel', []),
 
-    function makeWheelDirective(directiveName, direction) {
+        // Directives generator, idea borrowed from ngSwipe module
+        makeWheelDirective = function (directiveName, direction) {
 
-        direction = direction || 0;
+            direction = direction || 0;
 
-        eveWheelModule.directive(directiveName, ['$parse', function ($parse) {
+            eveWheelModule.directive(directiveName, ['$parse', function ($parse) {
 
-            return function (scope, element, attr) {
+                return function (scope, element, attr) {
 
-                var wheelHandler = $parse(attr[directiveName]);
+                    var wheelHandler = $parse(attr[directiveName]),
+                        onWheel = function (event) {
+                            event = event || window.event;
 
-                if ('onwheel' in document) {
-                    // IE9+, FF17+
-                    element.bind("wheel", onWheel)
-                } else if ('onmousewheel' in document) {
-                    // deprecated
-                    element.bind("mousewheel", onWheel)
-                } else {
-                    // 3.5 <= Firefox < 17
-                    element.bind("MozMousePixelScroll", onWheel)
-                }
+                            var delta = (event.deltaY * -1 || event.detail * -1 || event.wheelDelta) > 0 ? 1 : -1;
 
-                function onWheel(event) {
-                    event = event || window.event;
+                            if (direction === 0 || direction === delta) {
+                                scope.$apply(function () {
+                                    element.triggerHandler("evewheel");
+                                    wheelHandler(scope, {
+                                        $event: event,
+                                        $delta: delta
+                                    });
+                                });
+                            }
 
-                    var delta = (event.deltaY || event.detail || event.wheelDelta) > 0 ? 1 : -1;
+                            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+                        },
+                        wheelEvent;
 
-                    if (direction === 0 || direction === delta) {
-                        scope.$apply(function () {
-                            element.triggerHandler("evewheel");
-                            wheelHandler(scope, {
-                                $event: event,
-                                $delta: delta
-                            });
-                        });
+                    if (document.hasOwnProperty('onwheel')) {
+                        // IE9+, FF17+
+                        wheelEvent = "wheel";
+                    } else if (document.hasOwnProperty('onmousewheel')) {
+                        // deprecated
+                        wheelEvent = "mousewheel";
+                    } else {
+                        // 3.5 <= Firefox < 17
+                        wheelEvent = "MozMousePixelScroll";
                     }
 
-                    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-                }
-            }
+                    element.bind(wheelEvent, onWheel);
 
-        }])
+                    element.bind('$destroy', function() {
+                        element.unbind(wheelEvent, onWheel);
+                    });
 
-    }
+                };
+
+            }]);
+        };
 
     makeWheelDirective('eveWheel');
 
